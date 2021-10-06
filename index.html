@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+   
+    
+    <title>Graphics</title>
+</head>    
+    <body>
+       
+             <h1>GRAPHICS</h1>
+        <h2>для правильного ввода функции вводите: y = f(x)</h2>
+<canvas width="600" height="600" id="canvas"></canvas>
+        <div class="enter">
+<input id=txt type=text placeholder=" введите функцию " />
+            </div>
+<button onclick="clearcanvas(); myFunction();draw()"> нарисовать график </button> 
+        <div class="clear">
+<button onclick="clearcanvas(); razmetka_st()">clear</button>
+            </div>
+<!--        <button onclick="clear()"> очистить </button> -->
+        
+
+                <table>
+                    <tr>
+                        <td style="padding-right: 5px;">интервал X:</td>
+                        <td>
+                            
+                                [ <input type="text" id="AxisXMinVal"  name="AxisXMinVal" value="-10" />,
+                                <input type="text" id="AxisXMaxVal"  name="AxisXMaxVal" value="10" /> ]
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right: 5px;">интервал Y:</td>
+                        <td>
+                            
+                                [ <input type="text" id="AxisYMinVal"  name="AxisYMinVal" value="-10" />,
+                                <input type="text" id="AxisYMaxVal"  name="AxisYMaxVal" value="10" /> ]
+                            
+                        </td>
+                    </tr>
+     </table>
+   
+       
+<script>
+     
+    let step;
+    let step1;
+    let cnvs = document.querySelector('canvas')
+    let ctx = cnvs.getContext('2d')
+ 
+    function clearcanvas(){
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//           ctx.clearRect(0, 0, canvas.width, canvas.height);
+       
+    }
+    function razmetka_st(){//разметка
+        var input1 = document.getElementById('AxisXMinVal').value;
+  //console.log(input1)
+        var input2 = document.getElementById('AxisXMaxVal').value;
+ // console.log(input2)
+        document.getElementById('AxisXMinVal').value.innerHTML=input1;
+         document.getElementById('AxisXMaxVal').value.innerHTML=input2;
+        var input3 = document.getElementById('AxisYMinVal').value;
+  
+        var input4 = document.getElementById('AxisYMaxVal').value;
+  
+        document.getElementById('AxisYMinVal').value.innerHTML=input3;
+         document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+       // if(document.getElementById('AxisXMinVal').value %2==0)
+        for (var i = step; i<cnvs.width; i+=step){//вертикальные
+        ctx.beginPath();
+        ctx.strokeStyle = '#7a7979';
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, cnvs.height);
+        ctx.closePath();
+        ctx.stroke();
+}
+    for(var i = step; i<cnvs.height; i+=step){//верт риски
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.moveTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value-5);
+        ctx.lineTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value+5);
+        ctx.closePath();
+        ctx.stroke();
+    }
+    for (var i = step1; i<cnvs.height; i+=step1){//Горизонтальные
+        ctx.beginPath();
+        ctx.strokeStyle = '#7a7979';
+        ctx.moveTo(0, i);
+        ctx.lineTo(cnvs.width, i);
+        ctx.closePath();
+        ctx.stroke();
+    }
+     for(var i = step1; i<cnvs.height; i+=step1){//гор риски
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.moveTo(cnvs.width -step*document.getElementById('AxisXMaxVal').value-5,i);
+        ctx.lineTo( cnvs.width -step*document.getElementById('AxisXMaxVal').value+5, i);
+        ctx.closePath();
+        ctx.stroke();
+    }
+/*ctx.beginPath()
+for(let x = -4; x<4;x++){
+    ctx.moveTo(x*z,-cnvs.height/2)
+    ctx.lineTo(x*z,cnvs.height/2)
+    ctx.moveTo(-cnvs.width/2,x*z)
+    ctx.lineTo(cnvs.width/2,x*z)
+}
+ctx.stroke()*/
+//Ось X 
+var input3 = document.getElementById('AxisYMinVal').value;
+  
+        var input4 = document.getElementById('AxisYMaxVal').value;
+  
+        document.getElementById('AxisYMinVal').value.innerHTML=input3;
+         document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+ctx.beginPath();
+ctx.moveTo(0, cnvs.height + step1*document.getElementById('AxisYMinVal').value);
+ctx.lineTo(cnvs.width, cnvs.height + step1*document.getElementById('AxisYMinVal').value);
+ctx.strokeStyle = 'red';
+ctx.lineWidth = 2;
+ctx.closePath();
+ctx.stroke()
+    
+    // ось Y
+var input1 = document.getElementById('AxisXMinVal').value;
+  
+        var input2 = document.getElementById('AxisXMaxVal').value;
+  
+        document.getElementById('AxisXMinVal').value.innerHTML=input1;
+         document.getElementById('AxisXMaxVal').value.innerHTML=input2;
+ctx.beginPath();
+ctx.moveTo(cnvs.width -step*document.getElementById('AxisXMaxVal').value, 0)
+//ctx.moveTo(cnvs.width/2, 0);
+ctx.lineTo(cnvs.width -step*document.getElementById('AxisXMaxVal').value, cnvs.height);
+ctx.strokeStyle = 'red';
+ctx.closePath();
+ctx.stroke();
+
+
+
+ //график           
+
+    }
+
+        
+       
+    
+    function myFunction() {// определяет шаг
+         var input1 = Number(document.getElementById('AxisXMinVal').value);
+  //console.log(input1)
+        var input2 = Number(document.getElementById('AxisXMaxVal').value);
+  //console.log(input2)
+        document.getElementById('AxisXMinVal').value.innerHTML=input1;
+         document.getElementById('AxisXMaxVal').value.innerHTML=input2;
+        var input3 = Number(document.getElementById('AxisYMinVal').value);
+  
+        var input4 = Number(document.getElementById('AxisYMaxVal').value);
+  
+        document.getElementById('AxisYMinVal').value.innerHTML=input3;
+         document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+        //console.log(document.getElementById('AxisXMaxVal').value)
+        
+        //вычислене шага при значениях больше нуля
+        if(input1>=0 && input1<input2){
+           step = cnvs.height/(input2 - input1);
+            console.log(step)
+//            let output = (document.getElementById('AxisXMaxVal').value + document.getElementById('AxisXMinVal').value)
+//            console.log(output)
+           }
+        if(input3>=0 && input3<input4 ){
+            step1 = cnvs.height/(input4 - input3);
+        }
+            //вычисление шага, если - и +
+            if(input4>=0 && input3<0){
+                step1 = cnvs.height/(input4 - input3);
+            }
+            if(input2>=0 && input1<0){
+                step = cnvs.height/(input2 - input1);
+            }
+            //шаг - - 
+            if(input4<0 && input4>input3){
+                step1 = cnvs.height/(-(input4 + input3));
+            }
+            if(input2<0 && input2>input1){
+                step = cnvs.height/(-(input2 + input1));
+            }
+           //
+        console.log(step)
+            console.log(step1)
+        console.log(input2)
+            console.log(input4)
+        console.log(cnvs.height)
+            
+//        }else if(document.getElementById('AxisYMinVal').value>0 && document.getElementById("AxisXMaxVal").value>document.getElementById("AxisYMinVal").value){
+//     step = cnvs.height/(document.getElementById("AxisXMaxVal").value - document.getElementById("AxisXMinVal").value);
+//    step1 = cnvs.height/(document.getElementById("AxisYMaxVal").value - document.getElementById("AxisYMinVal").value);}
+//        else if()
+        
+        razmetka_st();         
+    }
+    
+   myFunction();
+    
+    
+
+    
+
+
+//      var input3 = document.getElementById('AxisYMaxVal').value;
+// document.getElementById('AxisYMaxVal').value.innerHTML=input3;
+//    var input4 = document.getElementById('AxisYMinVal').value;
+ //document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+function draw(){//рисует график
+   // clearcanvas();
+    var cw = canvas.width, ch = canvas.height;
+   // console.log(document.getElementById('AxisYMaxVal').value)
+    for(x = -cw / 2 / step; x < cw / 2 / step; x += 1 / step/10){
+        eval(document.getElementById("txt").value);
+        ctx.fillStyle = 'green'
+
+      
+        if(y<=document.getElementById('AxisYMaxVal').value && y>=document.getElementById('AxisYMinVal').value){
+        //console.log(document.getElementById('AxisYMaxVal').value)
+        ctx.fillRect(x * step + cnvs.width -step*document.getElementById('AxisXMaxVal').value, ch -(y * step1  - step1*document.getElementById('AxisYMinVal').value), 2, 2);
+        
+       }
+        
+    }
+}
+    
+
+    
+ 
+
+
+
+
+        </script>
+    </body>
+</html>

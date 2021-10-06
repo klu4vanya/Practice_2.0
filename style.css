@@ -1,0 +1,29 @@
+body{
+    margin: 5%;
+    
+}
+
+canvas{
+    display: block;
+    margin: 0 auto;
+    
+/*    text-align: center;*/
+  
+}
+
+
+.enter{
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px 0 ;
+    
+    
+    transform: translate(0,0);
+}
+.clear{
+    margin: 10px 0;
+ padding: 10px 0 ;
+}
+h2{
+    font-weight: 100;
+}
