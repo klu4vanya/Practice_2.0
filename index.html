@@ -13,7 +13,7 @@
         <h2>для правильного ввода функции вводите: y = f(x)</h2>
 <canvas width="600" height="600" id="canvas"></canvas>
         <div class="enter">
-<input id=txt type=text placeholder=" введите функцию " />
+<input id=txt type=text placeholder=" введите функцию y=... " />
             </div>
 <button onclick="clearcanvas(); myFunction();draw()"> нарисовать график </button> 
         <div class="clear">
@@ -29,6 +29,7 @@
                             
                                 [ <input type="text" id="AxisXMinVal"  name="AxisXMinVal" value="-10" />,
                                 <input type="text" id="AxisXMaxVal"  name="AxisXMaxVal" value="10" /> ]
+                             
                             
                         </td>
                     </tr>
@@ -38,6 +39,10 @@
                             
                                 [ <input type="text" id="AxisYMinVal"  name="AxisYMinVal" value="-10" />,
                                 <input type="text" id="AxisYMaxVal"  name="AxisYMaxVal" value="10" /> ]
+                            <label for="AxisYMinMaxValAuto">
+                                        <input type="checkbox" id="AxisYMinMaxValAuto" name="AxisYMinMaxValAuto" onclick="check()" style="margin-left: 10px; vertical-align: middle; margin-bottom: 5px;" />
+                                        авто
+                                    </label>
                             
                         </td>
                     </tr>
@@ -45,7 +50,24 @@
    
        
 <script>
-     
+    
+    
+   
+    function cos(x) {
+        return Math.cos(x);
+    }
+    function sin(x){
+        return Math.sin(x);
+    } 
+   function tg(x){
+        return Math.tan(x);
+    } 
+    function ctg(x){
+        return 1/Math.tan(x);
+    } 
+    function sqrt(x){
+        return Math.sqrt(x);
+    } 
     let step;
     let step1;
     let cnvs = document.querySelector('canvas')
@@ -57,20 +79,18 @@
        
     }
     function razmetka_st(){//разметка
+        
         var input1 = document.getElementById('AxisXMinVal').value;
-  //console.log(input1)
         var input2 = document.getElementById('AxisXMaxVal').value;
- // console.log(input2)
         document.getElementById('AxisXMinVal').value.innerHTML=input1;
          document.getElementById('AxisXMaxVal').value.innerHTML=input2;
         var input3 = document.getElementById('AxisYMinVal').value;
-  
         var input4 = document.getElementById('AxisYMaxVal').value;
-  
         document.getElementById('AxisYMinVal').value.innerHTML=input3;
          document.getElementById('AxisYMaxVal').value.innerHTML=input4;
-       // if(document.getElementById('AxisXMinVal').value %2==0)
-        for (var i = step; i<cnvs.width; i+=step){//вертикальные
+        //вертикальные
+        
+       for(var i = cnvs.width/2;i<=cnvs.width;i+=step){
         ctx.beginPath();
         ctx.strokeStyle = '#7a7979';
         ctx.lineWidth = 0.5;
@@ -78,16 +98,37 @@
         ctx.lineTo(i, cnvs.height);
         ctx.closePath();
         ctx.stroke();
-}
-    for(var i = step; i<cnvs.height; i+=step){//верт риски
+       }
+        for(var i = cnvs.width/2-step;i>=0;i-=step){
         ctx.beginPath();
-        ctx.strokeStyle = 'blue';
-        ctx.moveTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value-5);
-        ctx.lineTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value+5);
+        ctx.strokeStyle = '#7a7979';
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, cnvs.height);
         ctx.closePath();
         ctx.stroke();
-    }
-    for (var i = step1; i<cnvs.height; i+=step1){//Горизонтальные
+       }
+        //горизонтальные
+        for(var i = cnvs.width/2;i<=cnvs.width;i+=step){
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value-5);
+     ctx.lineTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value+5);
+        ctx.closePath();
+        ctx.stroke();
+       }
+        for(var i = cnvs.width/2-step;i>=0;i-=step){
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value-5);
+       ctx.lineTo(i, cnvs.height + step1*document.getElementById('AxisYMinVal').value+5);
+        ctx.closePath();
+        ctx.stroke();
+       }
+        
+    for(var i = cnvs.width/2;i<=cnvs.width;i+=step1){
         ctx.beginPath();
         ctx.strokeStyle = '#7a7979';
         ctx.moveTo(0, i);
@@ -95,7 +136,16 @@
         ctx.closePath();
         ctx.stroke();
     }
-     for(var i = step1; i<cnvs.height; i+=step1){//гор риски
+        for(var i = cnvs.width/2-step1;i>=0;i-=step1){
+        ctx.beginPath();
+        ctx.strokeStyle = '#7a7979';
+        ctx.moveTo(0, i);
+        ctx.lineTo(cnvs.width, i);
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+for(var i = cnvs.width/2; i<=cnvs.width; i+=step1){//гор риски
         ctx.beginPath();
         ctx.strokeStyle = 'blue';
         ctx.moveTo(cnvs.width -step*document.getElementById('AxisXMaxVal').value-5,i);
@@ -103,21 +153,20 @@
         ctx.closePath();
         ctx.stroke();
     }
-/*ctx.beginPath()
-for(let x = -4; x<4;x++){
-    ctx.moveTo(x*z,-cnvs.height/2)
-    ctx.lineTo(x*z,cnvs.height/2)
-    ctx.moveTo(-cnvs.width/2,x*z)
-    ctx.lineTo(cnvs.width/2,x*z)
-}
-ctx.stroke()*/
+     for(var i = cnvs.width/2-step1; i>=0; i-=step1){//гор риски
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.moveTo(cnvs.width -step*document.getElementById('AxisXMaxVal').value-5,i);
+        ctx.lineTo( cnvs.width -step*document.getElementById('AxisXMaxVal').value+5, i);
+        ctx.closePath();
+        ctx.stroke();
+    }
+
 //Ось X 
 var input3 = document.getElementById('AxisYMinVal').value;
-  
-        var input4 = document.getElementById('AxisYMaxVal').value;
-  
-        document.getElementById('AxisYMinVal').value.innerHTML=input3;
-         document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+var input4 = document.getElementById('AxisYMaxVal').value;
+document.getElementById('AxisYMinVal').value.innerHTML=input3;
+document.getElementById('AxisYMaxVal').value.innerHTML=input4;
 ctx.beginPath();
 ctx.moveTo(0, cnvs.height + step1*document.getElementById('AxisYMinVal').value);
 ctx.lineTo(cnvs.width, cnvs.height + step1*document.getElementById('AxisYMinVal').value);
@@ -192,9 +241,9 @@ ctx.stroke();
            //
         console.log(step)
             console.log(step1)
-        console.log(input2)
-            console.log(input4)
-        console.log(cnvs.height)
+       // console.log(input2)
+           // console.log(input4)
+        //console.log(cnvs.height)
             
 //        }else if(document.getElementById('AxisYMinVal').value>0 && document.getElementById("AxisXMaxVal").value>document.getElementById("AxisYMinVal").value){
 //     step = cnvs.height/(document.getElementById("AxisXMaxVal").value - document.getElementById("AxisXMinVal").value);
@@ -208,34 +257,51 @@ ctx.stroke();
     
     
 
-    
+   // cw / 2 / step
 
-
-//      var input3 = document.getElementById('AxisYMaxVal').value;
-// document.getElementById('AxisYMaxVal').value.innerHTML=input3;
-//    var input4 = document.getElementById('AxisYMinVal').value;
- //document.getElementById('AxisYMaxVal').value.innerHTML=input4;
+//
+//      var input1 = document.getElementById('AxisXMaxVal').value;
+// document.getElementById('AxisXMaxVal').value.innerHTML=input1;
+//    var input2 = document.getElementById('AxisXMinVal').value;
+// document.getElementById('AxisXMinVal').value.innerHTML=input2;
 function draw(){//рисует график
-   // clearcanvas();
+    var input1 = Number(document.getElementById('AxisXMinVal').value);
+        var input2 = Number(document.getElementById('AxisXMaxVal').value);
+        document.getElementById('AxisXMinVal').value.innerHTML=input1;
+         document.getElementById('AxisXMaxVal').value.innerHTML=input2;
+        var input3 = Number(document.getElementById('AxisYMinVal').value);
+        var input4 = Number(document.getElementById('AxisYMaxVal').value);
+    document.getElementById('AxisYMinVal').value.innerHTML=input3;
+         document.getElementById('AxisYMaxVal').value.innerHTML=input4;
     var cw = canvas.width, ch = canvas.height;
-   // console.log(document.getElementById('AxisYMaxVal').value)
-    for(x = -cw / 2 / step; x < cw / 2 / step; x += 1 / step/10){
+    for(x = -cw / 2 / step; x < input2; x += 1 / step/10){
         eval(document.getElementById("txt").value);
-        ctx.fillStyle = 'green'
+        ctx.fillStyle = 'green';
 
       
-        if(y<=document.getElementById('AxisYMaxVal').value && y>=document.getElementById('AxisYMinVal').value){
-        //console.log(document.getElementById('AxisYMaxVal').value)
+//        
         ctx.fillRect(x * step + cnvs.width -step*document.getElementById('AxisXMaxVal').value, ch -(y * step1  - step1*document.getElementById('AxisYMinVal').value), 2, 2);
         
-       }
+       //}
         
     }
 }
     
 
-    
- 
+    var i =false;
+   function check(){
+       if(i == false){
+      AxisYMaxVal.disabled = 1;
+       AxisYMinVal.disabled = 1;
+           document.getElementById('AxisYMinVal').value = -10;
+           document.getElementById('AxisYMaxVal').value = 10;
+           i = true;
+       }else{
+          AxisYMaxVal.disabled = 0;
+       AxisYMinVal.disabled = 0; 
+           i =false;
+       }
+   }
 
 
 
