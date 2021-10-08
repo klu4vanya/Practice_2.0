@@ -215,7 +215,7 @@ ctx.stroke();
         //console.log(document.getElementById('AxisXMaxVal').value)
         
         //вычислене шага при значениях больше нуля
-        if(input1>=0 && input1<input2){
+        if(input1>=0 && input1<input2){ 
            step = cnvs.height/(input2 - input1);
             console.log(step)
 //            let output = (document.getElementById('AxisXMaxVal').value + document.getElementById('AxisXMinVal').value)
@@ -274,13 +274,26 @@ function draw(){//рисует график
     document.getElementById('AxisYMinVal').value.innerHTML=input3;
          document.getElementById('AxisYMaxVal').value.innerHTML=input4;
     var cw = canvas.width, ch = canvas.height;
+//    var t;
+//    var t1;
     for(x = -cw / 2 / step; x < input2; x += 1 / step/10){
-        eval(document.getElementById("txt").value);
+       eval(document.getElementById("txt").value);
         ctx.fillStyle = 'green';
+//        t=y;
+//        for(x = -cw / 2 / step +  1 / step/10;x < input2;x += 1 / step/10){
+//           t1 = eval(document.getElementById("txt").value);
+//            if(t1>t){
+//               t = t1
+//            }else{
+//                
+//            }
+//            if()
+//       }
 
       
 //        
         ctx.fillRect(x * step + cnvs.width -step*document.getElementById('AxisXMaxVal').value, ch -(y * step1  - step1*document.getElementById('AxisYMinVal').value), 2, 2);
+        
         
        //}
         
@@ -290,18 +303,94 @@ function draw(){//рисует график
 
     var i =false;
    function check(){
-       if(i == false){
+       var d;
+      
+       
+//       for(x = -cnvs.width / 2 / step; x < document.getElementById('AxisXMaxVal').value; x += 1 / step/10){
+//        d = eval(document.getElementById("txt").value);
+//           for(x = -cnvs.width / 2 / step;x < document.getElementById('AxisXMaxVal').value; x += 1 / step/10){
+//               d1 = eval(document.getElementById("txt").value);
+//               if(d>d1){
+//           AxisYMaxVal.disabled = 1;
+//       AxisYMinVal.disabled = 1;
+//    document.getElementById('AxisYMaxVal').value = d;
+//    //document.getElementById('AxisYMinVal').value = d1;
+//       }else{
+//           AxisYMaxVal.disabled = 1;
+//       AxisYMinVal.disabled = 1;
+//    document.getElementById('AxisYMaxVal').value = d1;
+//    //document.getElementById('AxisYMinVal').value = d;
+//       }
+//           }
+//       }
+//       
+      if(i == false){
       AxisYMaxVal.disabled = 1;
        AxisYMinVal.disabled = 1;
-           document.getElementById('AxisYMinVal').value = -10;
-           document.getElementById('AxisYMaxVal').value = 10;
-           i = true;
-       }else{
+      i = true;
+      }  else{
           AxisYMaxVal.disabled = 0;
        AxisYMinVal.disabled = 0; 
            i =false;
+       }    
+       let arr = [];
+       for(x = -cnvs.width / 2 / step;x < document.getElementById('AxisXMaxVal').value; x += 1 / step/10){
+           d = eval(document.getElementById("txt").value);
+           arr.push(d)
+           
+          
        }
-   }
+       document.getElementById('AxisYMinVal').value=Math.round(Math.min.apply(null, arr));
+       document.getElementById('AxisYMaxVal').value = Math.round(Math.max.apply(null, arr))
+//       console.log(Math.round(Math.max.apply(null, arr)))
+//       console.log(Math.round(Math.min.apply(null, arr)))
+    
+       }
+     
+       
+       
+       
+       
+//       if(i == false){
+//      AxisYMaxVal.disabled = 1;
+//       AxisYMinVal.disabled = 1;
+//           x = document.getElementById('AxisXMaxVal').value;
+//           var z = eval(document.getElementById("txt").value);
+//           
+//             console.log(z);
+//          x = document.getElementById('AxisXMinVal').value;
+//           var z1 = eval(document.getElementById("txt").value);
+//           console.log(z1);
+//           
+//           if((z1 == z) && z1>0){
+//               console.log('q')
+//           document.getElementById('AxisYMinVal').value = 0;
+//           document.getElementById('AxisYMaxVal').value = z;
+//           }else{
+//                console.log('q')
+//           document.getElementById('AxisYMinVal').value = z1;
+//           document.getElementById('AxisYMaxVal').value = z;
+//           }
+//           if(z<z1){
+//               var z2 = z;
+//               z = z1;
+//           document.getElementById('AxisYMinVal').value = z2;
+//           console.log(document.getElementById('AxisYMinVal').value)
+//           document.getElementById('AxisYMaxVal').value = z;
+//           }
+//           if((z1 == z) && z1<0){
+//                console.log('q')
+//           document.getElementById('AxisYMinVal').value = z;
+//           document.getElementById('AxisYMaxVal').value = 0;
+//           }
+//           
+//           i = true;
+//       }else{
+//          AxisYMaxVal.disabled = 0;
+//       AxisYMinVal.disabled = 0; 
+//           i =false;
+//       }
+   
 
 
 
